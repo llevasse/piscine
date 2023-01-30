@@ -1,0 +1,96 @@
+42 -> forty-two
+420 -> four hundred twenty
+350 -> three hundred fifty
+569 -> five hundred sixty nine
+1 500 -> one thousands five hundred
+100 420 -> one hundred thousands four hundred twenty
+3 -> three
+30 -> thirty
+33 -> thirty three
+13 -> thirteen
+50 -> fifty
+0 -> zero
+
+
+
+si le nombre est en dessous de 20 :
+-> Si il est en dessous de 13 :
+	-> cas par cas
+-> Si il entre 19 et 13 (inclus) :
+	-> C'est comme si on avait l'unite x 10 et on remplace le "y" par "een"
+
+si il est entre 20 et 99 :
+-> Si il est % 10 :
+	-> on fait cas par cas
+-> Si il ne l'est pas :
+	-> on prend son chiffre des dizaine et on prend sa trad x10, et on ajoute 
+	   la valeur modulo 10
+
+Si il est entre 100 et 999 :
+-> On prend la valeur des centaines, et on la gere comme si c'etait une unite,
+   et on rajoute "hundred" apres. On traite le reste de maniere recursive
+
+Si il est entre 1 000 et 999 999 :
+-> On prend la valeur des milliers, on la garde comme si c'etait une centaine, 
+   et on rajoute "thousands" apres. On traite le reste de maniere recursive
+ 
+Si il est entre 1 000 000 et 999 999 999 :
+-> ... "million"
+
+Si il est entre 1 000 000 000 et INT MAX :
+-> ... "billion"
+
+
+
+	---=== PROTOTYPE DE DICT ===---
+
+0		:	zero
+1		:	one
+2		:	two
+3		:	three
+4		: 	four
+5		:	five
+6		:	six
+7		:	seven
+8		:	eight
+9		:	nine
+10		:	ten
+11		:	eleven
+12		:	twelve
+13		:	thirteen
+14		:	fourteen
+15		:	fifteen
+16		:	sixteen
+17		:	seventeen
+18		:	eighteen
+19		:	nineteen
+20		:	twenty
+30		:	13 - "een" + "y" 
+40		:	forty
+50		:	15 - "een" + "y"
+100		:	digit des centaine + "hundred"
+1000	:	digit des milliers + "thousand"
+1000000	: 	digit des million + "million"
+1000000000 : digit des milliards + "billion"
+
+
+["1:one", "2:two"]
+
+int	ft_strlen(char *string);
+int	ft_atoi(char *string);
+
+char	**import_dict(char *filename)
+-> Lit le fichier et met chaque element dans un dict
+
+char	*translate(char *string, char **dict)
+-> Si il trouve la valeur dans le dictionnaire, il la renvoie, sinon, il 
+renvoie NULL
+
+void	print_number(char *string, char **dict)
+On fait une boucle : tant qu'on est pas la fin du string
+	-> On verifie que la valeur qui nous reste depuis notre position n'est pas
+	   dans le dictionnaire
+	-> Si ce n'est pas le cas, alors on traite le string en fonction de sa 
+	   taille
+
+int 

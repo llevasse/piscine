@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/17 07:10:02 by llevasse          #+#    #+#             */
+/*   Updated: 2022/08/25 18:05:25 by llevasse         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct s_var
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		o;
+}	t_var;
+
+int	is_spe(char c, char *charset)
+{
+	int	i;
+
+	i = 0;
+	while (charset[i] != '\0' && charset[i] != c)
+		i++;
+	if (c == charset[i])
+		return (1);
+	return (0);
+}
+
+int	nb_occurence(char *str, char *charset)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (is_spe(str[i], charset))
+			count++;
+		while (is_spe(str[i], charset))
+			i++;
+		i++;
+	}
+	return (count);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	**ft_split(char *str, char *charset)
+{
+	t_var	var;
+
+	var.o = 0;
+	var.i = 0;
+	var.res = malloc(sizeof(char *) * nb_occurence(str, charset) + 1);
+	if (!var.res)
+		return (NULL);
+	while (str[var.i] != '\0')
+	{
+		var.j = 0;
+		while (is_spe(str[var.i], charset) == 1 && str[var.i] != '\0')
+			var.i++;
+		if (var.j == 0 && str[var.i] != '\0')
+		{
+			var.res[var.o] = malloc(ft_strlen(str) * sizeof(char) + 1);
+			if (!var.res[var.o])
+				return (NULL);
+			while (is_spe(str[var.i], charset) == 0 && str[var.i] != '\0')
+				var.res[var.o][var.j++] = str[var.i++];
+			var.res[var.o][var.i] = '\0';
+			var.o++;
+		}
+	}
+	var.res[var.o] = NULL;
+	return (var.res);
+}
